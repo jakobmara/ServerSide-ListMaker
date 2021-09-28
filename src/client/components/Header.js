@@ -13,7 +13,7 @@ const Header = ({ auth }) => {
     <nav>
       <div className="nav-wrapper">
         <Link to="/" className="brand-logo">
-          React SSR
+          ListMaker
         </Link>
         <ul className="right">
           <li>

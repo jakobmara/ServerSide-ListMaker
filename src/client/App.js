@@ -2,11 +2,15 @@ import React from 'react';
 import { renderRoutes } from 'react-router-config';
 import Header from './components/Header';
 import { fetchCurrentUser } from './actions';
-
+import NewNav from './components/NewNav'
 const App = ({ route }) => {
   return (
     <div>
       <Header />
+      <br/>      <br/>
+      <br/>
+
+      <NewNav />
       {renderRoutes(route.routes)}
     </div>
   );
