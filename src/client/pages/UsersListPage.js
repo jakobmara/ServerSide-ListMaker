@@ -35,11 +35,14 @@ class UsersList extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log("state: ", state);
   return { users: state.users };
 }
 
 function loadData(store) {
-  return store.dispatch(fetchUsers());
+  const val = store.dispatch(fetchUsers());
+  console.log('val: ', val);
+  return val;
 }
 
 export default {

@@ -8,22 +8,28 @@ import createStore from './helpers/createStore';
 
 const app = express();
 
-app.use(
-  '/api',
-  proxy('http://react-ssr-api.herokuapp.com', {
-    proxyReqOptDecorator(opts) {
-      opts.headers['x-forwarded-host'] = 'localhost:3000';
+app.use('/api',proxy('https://list-maker-api.herokuapp.com', {
+  proxyReqOptDecorator(opts){
       return opts;
-    }
-  })
-);
+  }//this is just for the current API (won't need to do this for my project) (make sure dont run into security errors with google auth)
+}));
+//return route.loadData ? route.loadData(store) : null; for testing purposes I expanded it
+
+
 app.use(express.static('public'));
 app.get('*', (req, res) => {
   const store = createStore(req);
 
   const promises = matchRoutes(Routes, req.path)
     .map(({ route }) => {
-      return route.loadData ? route.loadData(store) : null;
+      if (route.loadData) {
+        const params = req.path.split('/');
+        console.log('my params are: ', params)
+        return route.loadData(store, params[2])
+
+      }else{
+        return null
+      }
     })
     .map(promise => {
       if (promise) {
@@ -34,7 +40,7 @@ app.get('*', (req, res) => {
     });
 
   Promise.all(promises).then(() => {
-    const context = {};
+    const context = {params: req.params};
     const content = renderer(req, store, context);
 
     if (context.url) {
@@ -49,5 +55,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log('Listening on prot 3000');
+  console.log('Listening on port 3000');
 });

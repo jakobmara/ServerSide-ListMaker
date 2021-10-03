@@ -19,7 +19,7 @@ const store = createStore(
   reducers,
   window.INITIAL_STATE,
   applyMiddleware(thunk.withExtraArgument(axiosInstance))
-);
+); //because now api calls are being referred to via the API proxy for whatever reason the axios instance in createStore still uses diff API 
 
 ReactDOM.hydrate(
   <Provider store={store}>

@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import UsersListPage from './pages/UsersListPage';
 import NotFoundPage from './pages/NotFoundPage';
 import AdminsListPage from './pages/AdminsListPage';
+import ListPage from './pages/ListPage';
 
 export default [
   {
@@ -12,6 +13,11 @@ export default [
       {
         ...HomePage,
         path: '/',
+        exact: true
+      },
+      {
+        ...ListPage,
+        path: '/list/:id',
         exact: true
       },
       {

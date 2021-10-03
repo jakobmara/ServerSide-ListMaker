@@ -1,0 +1,53 @@
+#webTitle{
+    font-size: 2.1rem;
+}
+
+.navButton:hover {
+    background-color: rgba(252, 250, 250, 0.1);
+    height: 100%;
+}
+
+.navbar{
+    overflow: hidden;
+}
+.infoText {
+    text-align: center;
+    padding-top: 100px;
+}
+.centerText {
+    text-align: center;
+}
+.divider{
+    margin-top: -15px;
+}
+#searchBar{
+    width: 20rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+#searchSuggestions {
+    /* Remove default list styling */
+    padding: 0;
+    margin: 0;
+}
+
+#show{
+    border: None;
+    background-color: white;
+    color:blue;
+    text-decoration: underline;
+}
+
+#show:hover {
+    color: blue
+}
+.card {
+    border: none;
+}
+.suggestionImage{
+    width: 50px;
+}
+.listCell{
+    background: none;
+    text-align: left;   
+}
