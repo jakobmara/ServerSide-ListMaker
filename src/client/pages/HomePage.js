@@ -1,6 +1,11 @@
 import React from 'react';
+import Cookies from 'universal-cookie'
+const cookies = new Cookies();
 
 const Home = () => {
+  
+  console.log('userId from cookies:' + cookies.get('userId'));
+  
   return (
     <div className="center-align" style={{ marginTop: '200px' }}>
       <div className="w-50 mx-auto centerText">

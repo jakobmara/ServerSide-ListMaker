@@ -5,6 +5,8 @@ import UsersListPage from './pages/UsersListPage';
 import NotFoundPage from './pages/NotFoundPage';
 import AdminsListPage from './pages/AdminsListPage';
 import ListPage from './pages/ListPage';
+import ProfilePage from './pages/ProfilePage';
+import LoginPage from './pages/LoginPage';
 
 export default [
   {
@@ -19,6 +21,15 @@ export default [
         ...ListPage,
         path: '/list/:id',
         exact: true
+      },
+      {
+        ...ProfilePage,
+        path: '/mylists/:id',
+        exact: true
+      },
+      {
+        ...LoginPage,
+        path: '/login'
       },
       {
         ...AdminsListPage,

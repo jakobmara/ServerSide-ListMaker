@@ -6,7 +6,7 @@ import {
   ListGroup,
   Table,
   Modal,
-  Button
+  Button,
 } from "react-bootstrap";
 import axios from "axios";
 import ListEntry from "../components/ListEntry";
@@ -21,7 +21,7 @@ const SearchSuggestion = (props) => {
       className="listCell"
       action
       onClick={() =>
-        this.props.addEntry(props.name, props.img, props.url, props.desc)
+        props.addEntry(props.name, props.img, props.url, props.desc)
       }
     >
       <img alt="entry Pic" src={props.img} className="suggestionImage" />
@@ -59,6 +59,7 @@ class ListPage extends Component {
         searchSug: [],
         showEditWindow: false,
         info: this.props.listInfo,
+        showHide: false,
         documentLoaded: false
       }
       this.listInfo = [
@@ -69,6 +70,10 @@ class ListPage extends Component {
       console.log("setting diff state")
     }
     this.searchInput = this.searchInput.bind(this);
+    this.addEntry = this.addEntry.bind(this);
+    this.removeEntry = this.removeEntry.bind(this);
+    this.changeOrder = this.changeOrder.bind(this);
+    this.editEntry = this.editEntry.bind(this);
 
 
     console.log("data: ", this.state);
@@ -76,6 +81,7 @@ class ListPage extends Component {
 
   componentDidMount() {
     this.setState({documentLoaded: true})
+    this.props.fetchEntries(this.state.listId)
   }
 
 
@@ -175,9 +181,94 @@ class ListPage extends Component {
   }
 
 
+  addEntry(entryName, entryImg, url, description){
+    let reqURL = "https://list-maker-api.herokuapp.com/addEntry";
+    axios.post(reqURL, {
+      listId: this.state.listId,
+      listType: this.state.listType,
+      title: entryName,
+      img: entryImg,
+      url: url,
+      desc: description
+    });
+    this.componentDidMount();
+  }
+
+  async removeEntry(entryId){
+    let reqURL = "https://list-maker-api.herokuapp.com/removeEntry";
+    await axios.post(reqURL, {
+      entryId: entryId,
+      listId: this.state.listId
+    })
+    .then(this.componentDidMount()); //this makes it so page is showing updated information
+  }
+
+  async changeOrder(entryId, position, direction){
+    let reqURL = "https://list-maker-api.herokuapp.com/changeOrder";
+
+    await axios.post(reqURL, {
+      listId: this.state.listId,
+      position: position,
+      entryId: entryId,
+      direction: direction
+    })
+    .then(this.componentDidMount());
+  }
+
+  toggleFormVisibility() {
+    this.setState({ showHide: !this.state.showHide });
+
+  }
+
+
+  editEntry(entryId, entryName,  entryImg, entryNotes, entryRating, entryDesc, entryUrl) {
+    this.entryName = entryName;
+    this.entryImg = entryImg;
+    this.entryNotes = entryNotes;
+    this.entryUrl = entryUrl
+    //this sets the entryId so that the submission function can get the ID without having to make API call
+    this.entryId = entryId;
+    this.entryRating = entryRating;
+    this.entryDesc = entryDesc;
+
+    this.toggleFormVisibility();
+  }
+
+  async submitEdit(){
+    let newNote = document.getElementById('notes').value;
+    let rating = document.getElementById('rating').value;
+    console.log('edit rating is: ', rating)
+    let reqURL = "https://list-maker-api.herokuapp.com/editEntry"
+
+    await axios.put(reqURL, {
+      entryId: this.entryId,
+      newNote: newNote,
+      rating: rating
+    })
+    .then(() => {
+      this.toggleFormVisibility();
+    })
+    this.componentDidMount();
+
+  }
+
   renderEntries() {
-    return this.props.entries.map((entry) => {
-      return <p key={entry.id}>{entry.title}</p>;
+    return this.props.entries.map((e) => {
+      return (<ListEntry
+        key={e.id}
+        id={e.id}
+        title={e.title}
+        image={e.image}
+        url={e.url}
+        position={e.position}
+        description={e.desc}
+        rating={e.rating}
+        notes={e.notes}
+        removeEntry={this.removeEntry}
+        changeOrder={this.changeOrder}
+        editEntry={this.editEntry}
+        />
+    );
     });
   }
   
@@ -252,11 +343,74 @@ class ListPage extends Component {
                 </th>
               </tr>
             </thead>
-            {this.renderEntries()}
             <tbody id="listEntries">
+              {this.renderEntries()}
             </tbody>
           </Table>
         </div>
+        <Modal
+          show={this.state.showHide}
+          onHide={() => this.setState({ showHide: false })}
+          onLoad = {() => {
+            console.log('setting rating: ', this.entryRating)
+            document.getElementById("rating").value = this.entryRating
+            /*
+            if (!this.state.ownPage){
+              document.getElementById('notes').disabled = true;
+              document.getElementById('rating').disabled = true;
+              document.getElementById('saveBtn').hidden = true;  
+            }
+            */
+          }}
+        >
+          <Modal.Header>
+              <img alt="Entry Pic" src={this.entryImg}></img>
+            <Modal.Title className="editTitle">{this.entryName}</Modal.Title>
+
+          </Modal.Header>
+          <Modal.Body>
+            <p>
+              <strong>Description:</strong>
+            </p>
+            <p style={{marginTop: '-15px'}}>{this.entryDesc} <a className="nonHyperLink" href={this.entryUrl}>Source</a></p>
+            
+            <p> <strong>Notes:</strong></p>
+
+              <textarea id="notes" defaultValue={this.entryNotes}></textarea>
+              <label>Rating:</label><select name="rating" id ="rating">
+              <option value="-">-</option>
+              <option value="10">10</option>
+              <option value="9">9</option>
+              <option value="8">8</option>
+              <option value="7">7</option>
+              <option value="6">6</option>
+              <option value="5">5</option>
+              <option value="4">4</option>
+              <option value="3">3</option>
+              <option value="2">2</option>
+              <option value="1">1</option>
+              <option value="0">0</option>
+              </select>
+              <label>/10</label>
+
+          </Modal.Body>
+          <Modal.Footer>
+
+            <Button
+              variant="secondary"
+              onClick={() => this.toggleFormVisibility()}
+            >
+              Close
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => this.submitEdit()}
+              id="saveBtn"
+            >
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 
 class ListEntry extends Component {
@@ -11,7 +11,7 @@ class ListEntry extends Component {
       image: this.props.image,
       url: this.props.url,
     };
-    this.removeEntry = this.props.removeEntry.bind(this)
+    //this.removeEntry = this.props.removeEntry.bind(this)
   }
 
 
@@ -117,6 +117,4 @@ class ListEntry extends Component {
   }
 }
 
-export default {
-    component: ListEntry
-};
+export default ListEntry;

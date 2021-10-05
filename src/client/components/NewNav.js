@@ -1,22 +1,26 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Navbar, NavDropdown, Container, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
 import { connect } from 'react-redux';
+import Cookies from 'universal-cookie';
 
 const NewNav = ({ auth }) => {
-    const authButton = auth ? (
-        <NavDropdown id="navbarScrollingDropdown">
-            <LinkContainer to={{
-                pathname: '/myLists/',
-            }}>
-            <NavDropdown.Item href="#action3">My Lists</NavDropdown.Item>
-            </LinkContainer>
-            <NavDropdown.Divider />
-            <NavDropdown.Item>Logout</NavDropdown.Item>
-        </NavDropdown>
-    ) : (
-        [
+    const cookies = new Cookies();
+    const listUrl = '/myLists/' + cookies.get('userId');
+    let authButtons = []
+    //if (cookies.get('userId))
+
+    if (auth){
+        authButtons = [
+            <a key={1} className="navButton nav-link" href={listUrl}>
+                My lists</a>,
+            <NavDropdown id="navbarScrollingDropdown" title={cookies.get('username')} key={2}>
+                <NavDropdown.Item>Logout</NavDropdown.Item>
+            </NavDropdown>
+        ]
+    }else{
+        authButtons = [
             <Nav.Link className="navButton" as ={Link} 
                 to={{
                     pathname: '/login',
@@ -30,7 +34,10 @@ const NewNav = ({ auth }) => {
                 }} key={4}>
                     Sign Up</Nav.Link>
         ]
-    );
+    }
+    console.log("auth: ", auth)
+    
+
 //maybe change the buttons so only thing in drop down is logout and instead have a button for "my lists in the navbar"
     return (
         <Navbar bg="dark" variant="dark" className="parentDiv">
@@ -44,7 +51,7 @@ const NewNav = ({ auth }) => {
                 </Nav>
 
                 <Nav className="navButtonPadding" key={2}>
-                {authButton}
+                {authButtons}
                 </Nav>
         </Navbar>
     );
@@ -53,4 +60,5 @@ const NewNav = ({ auth }) => {
 function mapStateToProps({ auth }){
     return { auth };
 }
-export default connect(mapStateToProps)(NewNav);
+//withRouter is so that it still makes a request to the backend when it gets redirected via JS
+export default connect(mapStateToProps)(withRouter(NewNav)); 

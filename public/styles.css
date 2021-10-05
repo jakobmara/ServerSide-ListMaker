@@ -14,6 +14,8 @@
     text-align: center;
     padding-top: 100px;
 }
+
+/* ListPage/Search bar CSS */
 .centerText {
     text-align: center;
 }
@@ -50,4 +52,113 @@
 .listCell{
     background: none;
     text-align: left;   
+}
+
+/*List entry CSS */
+.entryNotes{
+    margin-top: -15px;
+    word-wrap: break-word;
+}
+
+
+tr:hover{
+    background-color:rgb(226, 224, 224);
+    cursor: pointer;
+
+}
+
+.entryInfo{
+    width: 100%;
+}
+
+.entryImage{
+    width: 92px;
+    height: 138px;
+}
+
+.removeBtn {
+    width: 100px
+}
+#arrOffset {
+    padding-left: 10px;
+}
+
+#upArrow{
+    background-color: transparent; 
+    border: 0ch; 
+    margin-top: 35px;
+    padding-top: 10px;
+    border: 1px solid transparent;
+}
+#upArrow:hover{
+    background-color: rgba(196, 196, 196, 0.3);
+    border: 1px solid black;
+}
+
+#downArrow{
+    background-color: transparent; 
+    border: 0ch;
+    padding-bottom: 10px;
+    border: 1px solid transparent;
+}
+#downArrow:hover{
+    background-color: rgba(196, 196, 196, 0.3);    
+    border: 1px solid black;
+}
+
+.arrow {
+    border: solid black;
+    border-width: 0 4px 4px 0;
+    display: inline-block;
+    text-align: right;
+    padding: 10px;
+    height: 19px;
+}
+.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+select{
+    display: inline;
+    width: auto;
+}
+label{
+    color: black;
+    margin-right: 10px;
+}
+.modal-dialog{
+    max-width: 50%;
+    margin-top: 10%;
+}
+.modal{
+    background-color: transparent;
+    max-height: none;
+}
+.editTitle{
+    margin: auto;
+    margin-left: 0;
+  }
+
+.listBtn{
+    width: 60%;
+    text-transform: none;
+}
+
+.formShadow {
+    box-shadow: 2px 2px 10px #000;
+}
+.homePageRow{
+    padding-top: 5%;
+}
+.formTitle{
+    text-align: center;
+    text-decoration: underline;
+}
+.errorText{
+    color: red;
+    padding-bottom: 15px;
 }

@@ -43,9 +43,11 @@ app.get('*', (req, res) => {
     const context = {params: req.params};
     const content = renderer(req, store, context);
 
+    console.log('contextis: ', context);
     if (context.url) {
       return res.redirect(301, context.url);
     }
+    
     if (context.notFound) {
       res.status(404);
     }
