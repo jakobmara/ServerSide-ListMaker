@@ -29,7 +29,6 @@ class ProfilePage extends Component{
         const cookies = new Cookies();
 
 
-        console.log(props);
         this.state = {
             lists: props.lists.lists,
             showHide: false,
@@ -53,7 +52,7 @@ class ProfilePage extends Component{
 
 
     componentDidMount(){
-        console.log('state: ', this.state)
+
         this.props.fetchProfLists(this.state.userId);
     }
 
@@ -137,6 +136,7 @@ class ProfilePage extends Component{
 
 function mapStateToProps(state, ownProps) {
     const userId = ownProps.match.params.id;
+
     return {userId: userId, lists: state.profLists};
 }
 

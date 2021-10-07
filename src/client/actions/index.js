@@ -1,3 +1,4 @@
+import axios from "axios";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -24,29 +25,25 @@ export const fetchCurrentUser = () => async (dispatch, getState, api) => {
   });
 };
 
-export const LOGIN_USER = 'login_user';
-export const loginUser = (name, password) => async (dispatch, getState, api) => {
-  console.log("in loginUser action")
-  /*
-  let reqURL = 'https://list-maker-api.herokuapp.com/login'
-  await axios.post(reqURL, {
-      userName: name,
-      password: password
-  }).then((response) => {
-      if (response.data.status_code === 406){
-          console.log("bad login")
-          this.setState({errorText: "Invalid username/password please try again"})
-      }else{
-          const cookies = new Cookies();
-          
-          cookies.set('username', response.data.username);
-          cookies.set('userId', response.data.userId);
-          this.setState({isLoggedIn: true})
-          this.props.loginAction();
-      }
-    })
-  */
+export const FETCH_PROFILE = 'fetch_profile';
+export const fetchProfile = (user) => async (dispatch, getState, api) => { 
+  console.log(`SET user DATA!!!: `, user);
 
+  dispatch({
+    type: FETCH_PROFILE,
+    payload: user
+  })
+}
+
+export const LOGIN_USER = 'login_user';
+export const loginUser = (name, userId) => async (dispatch, getState, api) => {
+  console.log("in loginUser action")
+  
+  const res = {
+    username: name,
+    id: userId
+  }
+  console.log('res is: ', res);
   dispatch({
     type: LOGIN_USER,
     payload: res

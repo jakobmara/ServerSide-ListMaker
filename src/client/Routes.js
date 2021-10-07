@@ -28,10 +28,6 @@ export default [
         exact: true
       },
       {
-        ...LoginPage,
-        path: '/login'
-      },
-      {
         ...AdminsListPage,
         path: '/admins'
       },
@@ -45,3 +41,10 @@ export default [
     ]
   }
 ];
+
+/*
+      {
+        ...LoginPage,
+        path: '/login'
+      },
+      */

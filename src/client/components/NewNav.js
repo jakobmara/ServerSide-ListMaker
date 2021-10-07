@@ -5,28 +5,29 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
 
-const NewNav = ({ auth }) => {
+const NewNav = ({ user }) => {
     const cookies = new Cookies();
-    const listUrl = '/myLists/' + cookies.get('userId');
+    const listUrl = '/myLists/' + user;
     let authButtons = []
     //if (cookies.get('userId))
 
-    if (auth){
+    if (user){
+        console.log('USERNAME:!!!', user);
+    }
+
+
+    if (user){
         authButtons = [
             <a key={1} className="navButton nav-link" href={listUrl}>
                 My lists</a>,
-            <NavDropdown id="navbarScrollingDropdown" title={cookies.get('username')} key={2}>
+            <NavDropdown id="navbarScrollingDropdown" title={user} key={2}>
                 <NavDropdown.Item>Logout</NavDropdown.Item>
             </NavDropdown>
         ]
     }else{
         authButtons = [
-            <Nav.Link className="navButton" as ={Link} 
-                to={{
-                    pathname: '/login',
-                    state: {purpose: "Login"}
-                }} key={3}>
-                    Login</Nav.Link>,
+            <a key={1} className="navButton nav-link" href="/login">
+                Login</a>,
             <Nav.Link className="navButton" as ={Link} 
                 to={{
                     pathname: '/signup',
@@ -35,7 +36,6 @@ const NewNav = ({ auth }) => {
                     Sign Up</Nav.Link>
         ]
     }
-    console.log("auth: ", auth)
     
 
 //maybe change the buttons so only thing in drop down is logout and instead have a button for "my lists in the navbar"
@@ -57,7 +57,7 @@ const NewNav = ({ auth }) => {
     );
 };
 
-function mapStateToProps({ auth }){
+function mapStateToProps({auth}){
     return { auth };
 }
 //withRouter is so that it still makes a request to the backend when it gets redirected via JS

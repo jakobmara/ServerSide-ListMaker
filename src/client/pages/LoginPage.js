@@ -35,11 +35,9 @@ class LoginPage extends Component{
                 this.setState({errorText: "Invalid username/password please try again"})
             }else{
                 const cookies = new Cookies();
-                
-                cookies.set('username', response.data.username);
-                cookies.set('userId', response.data.userId);
                 this.setState({isLoggedIn: true})
-                this.props.loginAction();
+                console.log('calling dispatcher now')
+                this.props.loginAction(response.data.username, response.data.userId);
             }
             console.log(response);
         })
@@ -82,18 +80,11 @@ class LoginPage extends Component{
 }
 
 function mapDispatchToProps(dispatch){
-    console.log('calling dispatch')
     return ({
-        loginAction : () => {dispatch(loginUser)}
+        loginAction : (userName, userId) => {dispatch(loginUser(userName, userId))}
     })
 }
 
-function mapStateToProps(state){
-    console.log('state in maptoState: ');
-    console.log(state);
-    return {}
-}
-
 export default {
-    component: connect(mapStateToProps,mapDispatchToProps)(LoginPage)
+    component: connect(null,mapDispatchToProps)(LoginPage)
 };

@@ -67,7 +67,6 @@ class ListPage extends Component {
         <h6 key={2}>By: {this.state.info.author}</h6>,
         <p key={3}> List of entries for {this.state.listId} </p>
       ]
-      console.log("setting diff state")
     }
     this.searchInput = this.searchInput.bind(this);
     this.addEntry = this.addEntry.bind(this);
@@ -76,7 +75,6 @@ class ListPage extends Component {
     this.editEntry = this.editEntry.bind(this);
 
 
-    console.log("data: ", this.state);
   }
 
   componentDidMount() {
@@ -87,7 +85,6 @@ class ListPage extends Component {
 
   changeLimit() {
     if (this.state.documentLoaded){
-      console.log("changing limit")
       if (this.suggestionLimit === 3) {
         this.suggestionLimit = 6;
         this.runSearch(this.state.searchQuery);
@@ -102,7 +99,6 @@ class ListPage extends Component {
 
   runSearch(searchQuery) {
     //API call to TMDB API
-    console.log("calling run search")
     if (this.state.listType === "movie") {
       this.runMovieSearch(searchQuery);
     }
@@ -110,13 +106,10 @@ class ListPage extends Component {
 
   runMovieSearch(query) {
     let url = "".concat(baseURL,"search/movie?api_key=",API_KEY,"&query=",query);
-    console.log("calling search")
 
     
     axios.get(url)
     .then((response) => {
-      console.log('running search...')
-      console.log(this.state.searchSug);
       let data = response.data
       var searchSug = [];
       this.setState({searchSug: []});
@@ -237,7 +230,6 @@ class ListPage extends Component {
   async submitEdit(){
     let newNote = document.getElementById('notes').value;
     let rating = document.getElementById('rating').value;
-    console.log('edit rating is: ', rating)
     let reqURL = "https://list-maker-api.herokuapp.com/editEntry"
 
     await axios.put(reqURL, {
@@ -275,7 +267,6 @@ class ListPage extends Component {
   searchInput(e) {
     if (this.state.documentLoaded){
       if (e.target.value.length >= 3) {
-        console.log("running search with value: ", e.target.value)
         this.setState({ searchQuery: e.target.value });
         this.runSearch(e.target.value);
         document.getElementById("show").hidden = false;
@@ -287,7 +278,6 @@ class ListPage extends Component {
   }
 
   renderSearchSuggestions() {
-    console.log("rendering: ", this.state.searchSug)
     return this.state.searchSug.map((s) => {
       return (
         <SearchSuggestion
@@ -352,7 +342,6 @@ class ListPage extends Component {
           show={this.state.showHide}
           onHide={() => this.setState({ showHide: false })}
           onLoad = {() => {
-            console.log('setting rating: ', this.entryRating)
             document.getElementById("rating").value = this.entryRating
             /*
             if (!this.state.ownPage){
@@ -422,7 +411,7 @@ function mapStateToProps(state, ownProps) {
     return { entries: state.entries, listId: listPageId, listInfo: state.listInfo};
 }
 
-function loadData(store, pageNum) {
+function loadData(store, auth, pageNum) {
   let val = null
   
   console.log('calling fetch Entries with pageNum: ', pageNum);
