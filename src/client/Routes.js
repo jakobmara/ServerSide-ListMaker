@@ -7,7 +7,7 @@ import AdminsListPage from './pages/AdminsListPage';
 import ListPage from './pages/ListPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
-
+import ExplorePage from './pages/ExplorePage';
 export default [
   {
     ...App,
@@ -28,6 +28,11 @@ export default [
         exact: true
       },
       {
+        ...ExplorePage,
+        path: '/explore',
+        exact: true
+      },
+      {
         ...AdminsListPage,
         path: '/admins'
       },
@@ -41,10 +46,3 @@ export default [
     ]
   }
 ];
-
-/*
-      {
-        ...LoginPage,
-        path: '/login'
-      },
-      */

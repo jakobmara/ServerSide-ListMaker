@@ -146,6 +146,7 @@ label{
 .listBtn{
     width: 60%;
     text-transform: none;
+    height:fit-content;
 }
 
 .formShadow {
@@ -161,4 +162,30 @@ label{
 .errorText{
     color: red;
     padding-bottom: 15px;
+}
+
+.authorText{
+    color: grey;
+    font-size: 13px;
+}
+.listTitle{
+    font-size: 20px;
+}
+.non-hyperlink{
+    text-decoration: none;
+    color: rgb(0 0 0 / 90%)
+}
+.non-hyperlink:hover{
+    background-color: rgba(0, 0, 0, 0.04)
+}
+
+.MuiButtonBase-root {
+    height: 100%;
+    padding-right: 15px;
+}
+.MuiButtonBase-root:focus {
+    background-color: transparent !important;
+}
+.filterBtn{
+    float: right;
 }

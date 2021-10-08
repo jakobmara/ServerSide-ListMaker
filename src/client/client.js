@@ -29,3 +29,4 @@ ReactDOM.hydrate(
   </Provider>,
   document.querySelector('#root')
 );
+

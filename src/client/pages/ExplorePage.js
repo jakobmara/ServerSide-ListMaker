@@ -1,15 +1,23 @@
 import { Component } from 'react';
 import React from "react";
 import { ButtonGroup, DropdownButton, Dropdown } from "react-bootstrap"
-import ListDisplayComponent from './ListDisplayComponent';
+import FilterListIcon from '@mui/icons-material/FilterList';
+
+const ListDisplayComponent = (props) => {
+    return (
+        <div id={props.id}>
+            <a href={props.url}>
+                <button id={props.type} className="btn btn-outline-primary listBtn"><span className="listTitle">{props.title}</span><p> <span className="authorText">By: {props.author}</span></p></button>
+            </a>
+        </div>
+    )
+}
 
 class Explore extends Component{
     
     constructor(props){
         super(props)
         this.addList = this.addList.bind(this)
-        this.addButton = this.addButton.bind(this)
-        this.createList = this.createList.bind(this)
         this.populate = this.populate.bind(this)
 
         this.state = {
@@ -24,29 +32,6 @@ class Explore extends Component{
         //this.populate(this.state.listFilter)
     }
 
-
-    addButton(){
-        let listName = document.getElementById("name").value;
-        if(listName !== ""){
-            let genre = document.getElementById("Genre").value;
-            this.createList(listName,genre);
-        }
-
-    }
-
-    //when user wants to create a new list adds list to DB
-    createList(name, type){
-        let requestBody = {
-            listName: name,
-            genre: type,
-            //userId: this.state.userId
-        }
-        fetch('https://list-maker-api.herokuapp.com/createList', {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain' },
-            body: JSON.stringify(requestBody)
-          })
-    }
 
     async populate(listType){
         let requestUrl = 'https://list-maker-api.herokuapp.com/lists?cat=' + listType
@@ -82,7 +67,11 @@ class Explore extends Component{
         disp.innerText = listType
         document.getElementById(listType+'Option').classList.add('active')
     }
-
+    renderLists(){
+        return this.state.lists.map((l) => {
+            return (<ListDisplayComponent id={l.id} url={'/list/'+ l.id} title={l.title} type={l.type} delList={this.deleteList} key={l.id} author={l.author}/>)
+        })
+    }
     
     render() {
         return (
@@ -93,8 +82,8 @@ class Explore extends Component{
             <h1 className="centerText">Explore</h1>
             <hr/>
 
-            <label>filter:</label>
-            <DropdownButton as={ButtonGroup} title="All" id="bg-vertical-dropdown-1">
+            <DropdownButton as={ButtonGroup} title={<FilterListIcon/>} id="bg-vertical-dropdown-1" className="filterBtn">
+
             <Dropdown.Item id="AllOption" eventKey="1" active={true} onClick={(e) => {
                     e.preventDefault();
                     this.filter(e.target.innerText)
@@ -110,16 +99,10 @@ class Explore extends Component{
                 }}>TV</Dropdown.Item>
             </DropdownButton>
             <br/>
+            <br/>
             <div id="listBtns" className="centerText">
-            {this.state.lists.map((l) => {
-                return <ListDisplayComponent
-                    id={l.id}
-                    title={l.title}
-                    type={l.type}
-                    author={l.author}
-                    page="explore"
-                    />
-            })}
+            
+            {this.renderLists()}
             </div>
         </div>
 

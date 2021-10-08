@@ -5,7 +5,6 @@ const cookies = new Cookies();
 export const FETCH_USERS = 'fetch_users';
 export const fetchUsers = () => async (dispatch, getState, api) => {
   const res = await api.get('/users');
-  console.log("res for fetching users: ", res);
   dispatch({
     type: FETCH_USERS,
     payload: res
@@ -27,8 +26,7 @@ export const fetchCurrentUser = () => async (dispatch, getState, api) => {
 
 export const FETCH_PROFILE = 'fetch_profile';
 export const fetchProfile = (user) => async (dispatch, getState, api) => { 
-  console.log(`SET user DATA!!!: `, user);
-
+  console.log("fetching logged in user: ", user);
   dispatch({
     type: FETCH_PROFILE,
     payload: user
@@ -37,13 +35,12 @@ export const fetchProfile = (user) => async (dispatch, getState, api) => {
 
 export const LOGIN_USER = 'login_user';
 export const loginUser = (name, userId) => async (dispatch, getState, api) => {
-  console.log("in loginUser action")
   
   const res = {
     username: name,
     id: userId
   }
-  console.log('res is: ', res);
+
   dispatch({
     type: LOGIN_USER,
     payload: res
@@ -65,7 +62,6 @@ export const fetchAdmins = () => async (dispatch, getState, api) => {
 export const FETCH_ENTRIES = 'fetch_entries';
 export const fetchEntries = (listId) => async (dispatch, getState, api) => {
   const res = await api.get('/getListEntries?listId=' + listId);
-  //console.log("new res for fetch: ", res);
 
   dispatch({
     type: FETCH_ENTRIES,
@@ -76,7 +72,6 @@ export const fetchEntries = (listId) => async (dispatch, getState, api) => {
 export const FETCH_LIST_INFO = 'fetch_list_info';
 export const fetchListInfo = (listId) => async (dispatch, getState, api) => {
   
-  console.log("passed: ", listId);
   const res = await api.get('/getListInfo?listId=' + listId);
 
   dispatch({
@@ -87,7 +82,7 @@ export const fetchListInfo = (listId) => async (dispatch, getState, api) => {
 
 export const FETCH_PROF_LISTS = 'fetch_prof_lists';
 export const fetchProfLists = (userId) => async (dispatch, getState, api) => {
-  const res = await api.get('/userPage?userId=' + userId);
+  const res = await api.get('/profPage?uname=' + userId);
 
   dispatch({
     type: FETCH_PROF_LISTS,

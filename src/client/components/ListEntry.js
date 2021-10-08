@@ -18,14 +18,7 @@ class ListEntry extends Component {
 
   render() {
     return (
-      <tr>
-        <td>
-          <h3>{this.props.position}</h3>
-        </td>
-        <td
-          className="entry entryInfo"
-          
-          onClick={() =>
+      <tr onClick={() =>
             this.props.editEntry(
               this.props.id,
               this.props.title,
@@ -36,8 +29,11 @@ class ListEntry extends Component {
               this.props.url,
               this.props.position
             )
-          }
-        >
+          }>
+        <td >
+          <h3>{this.props.position}</h3>
+        </td>
+        <td className="entry entryInfo">
           <div className="container">
             <div className="row align-items-center">
               <div className="col-md-auto">

@@ -11,6 +11,7 @@ import {
 import axios from "axios";
 import ListEntry from "../components/ListEntry";
 
+
 const API_KEY = "370fd83cf19dac84ad93508558816da3";
 const baseURL = "https://api.themoviedb.org/3/";
 const basePosterURL = "https://image.tmdb.org/t/p/w92";
@@ -46,7 +47,8 @@ class ListPage extends Component {
       searchSug: [],
       showEditWindow: false,
       info: this.props.listInfo,
-      documentLoaded: false
+      documentLoaded: false,
+      can_edit: false
     };
     if (this.props.listInfo){
       this.state = {
@@ -60,7 +62,8 @@ class ListPage extends Component {
         showEditWindow: false,
         info: this.props.listInfo,
         showHide: false,
-        documentLoaded: false
+        documentLoaded: false,
+        can_edit: this.props.user === this.props.listInfo.author
       }
       this.listInfo = [
         <h1 key={1}>{this.state.title}</h1>,
@@ -79,6 +82,18 @@ class ListPage extends Component {
 
   componentDidMount() {
     this.setState({documentLoaded: true})
+    if (!this.state.can_edit){
+      document.getElementById("searchBar").hidden = true
+      document.querySelectorAll('button.removeBtn').forEach(elem => {
+        elem.hidden = true
+      })
+      document.querySelectorAll('button#upArrow').forEach(elem => {
+        elem.hidden = true
+      })
+      document.querySelectorAll('button#downArrow').forEach(elem => {
+        elem.hidden = true
+      })
+    }
     this.props.fetchEntries(this.state.listId)
   }
 
@@ -101,6 +116,8 @@ class ListPage extends Component {
     //API call to TMDB API
     if (this.state.listType === "movie") {
       this.runMovieSearch(searchQuery);
+    }else if (this.state.listType === "tv"){
+      this.runTvSearch(searchQuery);
     }
   }
 
@@ -144,7 +161,7 @@ class ListPage extends Component {
   runTvSearch(query) {
     
     
-    let url = "".concat(this.baseURL,"search/tv?api_key=",this.APIKEY,"&query=",query);
+    let url = "".concat(baseURL,"search/tv?api_key=",API_KEY,"&query=",query);
     fetch(url)
       .then((result) => result.json())
       .then((data) => {
@@ -159,7 +176,7 @@ class ListPage extends Component {
           if (posterURL == null) {
             posterURL = "https://i.imgur.com/ADXHOen.png";
           } else {
-            posterURL = this.basePosterURL + posterURL;
+            posterURL = basePosterURL + posterURL;
           }
           let tvObj = {
             title: tvTitle,
@@ -343,13 +360,13 @@ class ListPage extends Component {
           onHide={() => this.setState({ showHide: false })}
           onLoad = {() => {
             document.getElementById("rating").value = this.entryRating
-            /*
-            if (!this.state.ownPage){
+            
+            if (!this.state.can_edit){
               document.getElementById('notes').disabled = true;
               document.getElementById('rating').disabled = true;
               document.getElementById('saveBtn').hidden = true;  
             }
-            */
+            
           }}
         >
           <Modal.Header>
@@ -408,16 +425,16 @@ class ListPage extends Component {
 function mapStateToProps(state, ownProps) {
     const listPageId = ownProps.match.params.id;
 
-    return { entries: state.entries, listId: listPageId, listInfo: state.listInfo};
+    return { entries: state.entries, listId: listPageId, listInfo: state.listInfo, user: state.user};
 }
 
 function loadData(store, auth, pageNum) {
   let val = null
   
-  console.log('calling fetch Entries with pageNum: ', pageNum);
+  console.log('calling fetch Entries/info with pageNum: ', pageNum);
   val = Promise.all([
-    store.dispatch(fetchEntries(pageNum)),
-    store.dispatch(fetchListInfo(pageNum))
+    store.dispatch(fetchListInfo(pageNum)),
+    store.dispatch(fetchEntries(pageNum))
   ])
   
   

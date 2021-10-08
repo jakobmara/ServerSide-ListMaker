@@ -33,7 +33,7 @@ class ProfilePage extends Component{
             lists: props.lists.lists,
             showHide: false,
             author: props.lists.name,
-            userId: props.userId
+            username: props.username
         };
 
     }
@@ -52,8 +52,7 @@ class ProfilePage extends Component{
 
 
     componentDidMount(){
-
-        this.props.fetchProfLists(this.state.userId);
+        this.props.fetchProfLists(this.state.username);
     }
 
     addList(){
@@ -68,11 +67,12 @@ class ProfilePage extends Component{
     }
 
     async createList(name, type){
-        const reqURL = 'https://list-maker-api.herokuapp.com/createList'
+        console.log("calling create list:")
+        const reqURL =  'https://list-maker-api.herokuapp.com/createList'
         await axios.post(reqURL, {
             listName: name,
             genre: type,
-            userId: this.state.userId
+            username: this.state.username
         })
         .then(this.componentDidMount())
     }
@@ -135,12 +135,13 @@ class ProfilePage extends Component{
 }
 
 function mapStateToProps(state, ownProps) {
-    const userId = ownProps.match.params.id;
-
-    return {userId: userId, lists: state.profLists};
+    const username = ownProps.match.params.id;
+    console.log("lists: ", state);
+    return {username: username, lists: state.profLists};
 }
 
-function loadData(store, userId){
+function loadData(store, auth, userId){
+    console.log('loading data... provided: ', userId);
     const val = store.dispatch(fetchProfLists(userId));
     return val;
 }
