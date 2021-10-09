@@ -50,8 +50,8 @@ app.get('/', (req,res) => {
   }
 
   if (req.oidc.isAuthenticated()){
-    console.log('calling signup')
     if (!users.includes(req.oidc.user.nickname)){
+      console.log('calling signup')
       axios.post(API_URL +'/signUp', {
         userName: req.oidc.user.nickname  
       })

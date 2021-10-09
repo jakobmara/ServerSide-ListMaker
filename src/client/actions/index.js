@@ -1,6 +1,4 @@
 import axios from "axios";
-import Cookies from "universal-cookie";
-const cookies = new Cookies();
 
 export const FETCH_USERS = 'fetch_users';
 export const fetchUsers = () => async (dispatch, getState, api) => {
@@ -11,18 +9,7 @@ export const fetchUsers = () => async (dispatch, getState, api) => {
   });
 };
 
-export const FETCH_CURRENT_USER = 'fetch_current_user';
-export const fetchCurrentUser = () => async (dispatch, getState, api) => {
-  const res = {
-    userId: cookies.get('userId'),
-    username: cookies.get('username')
-  };
 
-  dispatch({
-    type: FETCH_CURRENT_USER,
-    payload: res
-  });
-};
 
 export const FETCH_PROFILE = 'fetch_profile';
 export const fetchProfile = (user) => async (dispatch, getState, api) => { 

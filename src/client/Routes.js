@@ -1,12 +1,9 @@
 import React from 'react';
 import App from './App';
 import HomePage from './pages/HomePage';
-import UsersListPage from './pages/UsersListPage';
 import NotFoundPage from './pages/NotFoundPage';
-import AdminsListPage from './pages/AdminsListPage';
 import ListPage from './pages/ListPage';
 import ProfilePage from './pages/ProfilePage';
-import LoginPage from './pages/LoginPage';
 import ExplorePage from './pages/ExplorePage';
 export default [
   {
@@ -31,14 +28,6 @@ export default [
         ...ExplorePage,
         path: '/explore',
         exact: true
-      },
-      {
-        ...AdminsListPage,
-        path: '/admins'
-      },
-      {
-        ...UsersListPage,
-        path: '/users'
       },
       {
         ...NotFoundPage

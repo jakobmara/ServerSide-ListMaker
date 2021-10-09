@@ -7,7 +7,6 @@ import {
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
-import Cookies from 'universal-cookie';
 import { fetchProfLists } from '../actions';
 
 const ListDisplayComponent = (props) => {
@@ -26,7 +25,6 @@ class ProfilePage extends Component{
 
     constructor(props){
         super(props);
-        const cookies = new Cookies();
 
 
         this.state = {
