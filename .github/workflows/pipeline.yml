@@ -17,4 +17,4 @@ jobs:
       - name: Build app
         run: npm run prod
       - name: Docker Build 
-        run: docker build -t ListMaker .
+        run: docker build -t listmaker .
