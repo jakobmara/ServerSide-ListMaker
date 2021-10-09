@@ -6,15 +6,28 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
       - uses: actions/checkout@v2
+      
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
+
       - name: Install dependencies
         run: npm ci
+
       - name: Build app
         run: npm run prod
+
+      - name: Docker Login
+        env: 
+          TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }} 
+        run: docker login -u jakegam -p $TOKEN
+
       - name: Docker Build 
-        run: docker build -t listmaker .
+        run: docker build -t jakegam/listmaker .
+
+      - name: Docker Push
+        run: docker push jakegam/listmaker
