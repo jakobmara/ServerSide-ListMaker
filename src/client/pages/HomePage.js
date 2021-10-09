@@ -13,7 +13,7 @@ const Home = () => {
                            <br/>
                            <h3 className="display-5 ">Get started </h3> 
                            <p> 
-                To create your first list <a href="/signup">sign up</a> and click on your username that appears in the navbar and select the "My Lists" option to be directed to your profile page.
+                To create your first list <a href="/login">sign up</a> and click on your username that appears in the navbar and select the "My Lists" option to be directed to your profile page.
                         </p>                        
                     </div>
     </div>
