@@ -84,7 +84,7 @@ const NewNav = ({ user }) => {
             <LinkContainer  to={{
                 pathname: '/',
             }}>
-                <Navbar.Brand href="/" id="webTitle">ListMaker</Navbar.Brand>
+                <Navbar.Brand href="/" id="webTitle" className="nav-link">ListMaker</Navbar.Brand>
                 </LinkContainer>
                 <Nav className="me-auto" key={1}>
                     <Nav.Link href="/explore" className="navButton">Explore</Nav.Link>

@@ -11,9 +11,9 @@ const Home = () => {
                             This website was created for the purpose of hosting user created ordered lists. You can browse user created lists by visiting the explore page.
                         </p>
                            <br/>
-                           <h3 className="display-5 ">Get started </h3> 
+                           <h3 className="display-5 ">Getting started </h3> 
                            <p> 
-                To create your first list <a href="/login">sign up</a> and click on your username that appears in the navbar and select the "My Lists" option to be directed to your profile page.
+                To create your first list <a href="/login">sign up</a> and click on your profile icon that appears in the navbar and select the "My Lists" option to be directed to your profile page.
                         </p>                        
                     </div>
     </div>
