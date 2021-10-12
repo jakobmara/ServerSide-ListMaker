@@ -29,11 +29,14 @@ axios.get('https://list-maker-api.herokuapp.com/getUsers')
 
 const { auth } = require('express-openid-connect');
 const { requiresAuth } = require('express-openid-connect');
+
+app.set('trust proxy', true)
+
 const config = {
   authRequired: false,
   auth0Logout: true,
   secret: 'f374b9f12d759ede0225baf118d1069d59116c299a95b9038d82ef77d1e48d58',
-  baseURL: 'http://listmaker.jakemarasovic.dev',
+  baseURL: 'http://24.141.52.96:3000/',
   clientID: '3vLG3v0eddwZIPP22BYBNNmPKWgcf6IW',
   issuerBaseURL: 'https://dev-zc9k6qt8.us.auth0.com'
 };
