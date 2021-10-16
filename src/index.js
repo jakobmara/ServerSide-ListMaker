@@ -36,7 +36,7 @@ const config = {
   authRequired: false,
   auth0Logout: true,
   secret: 'f374b9f12d759ede0225baf118d1069d59116c299a95b9038d82ef77d1e48d58',
-  baseURL: 'http://24.141.52.96:3000/',
+  baseURL: 'http://24.141.52.96',
   clientID: '3vLG3v0eddwZIPP22BYBNNmPKWgcf6IW',
   issuerBaseURL: 'https://dev-zc9k6qt8.us.auth0.com'
 };
@@ -152,6 +152,6 @@ app.get('*', (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log('Listening on port 3000');
+app.listen(80, () => {
+  console.log('Listening on port 80');
 });
