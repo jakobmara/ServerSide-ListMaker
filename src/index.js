@@ -46,8 +46,6 @@ app.use(auth(config));
 
 // req.isAuthenticated is provided from the auth router
 app.get('/', (req,res) => {
-  console.log("USERS in dir home:",users)
-
   if (req.oidc.user){
     console.log("SIGNED IN DIR home", req.oidc.user.nickname);
   }
@@ -110,7 +108,6 @@ app.get('/profile', requiresAuth(), (req, res) => {
 app.use(express.static('public'));
 app.get('*', (req, res) => {
   const store = createStore(req);  
-  console.log("USERS:",users)
   if (req.oidc.user){
     console.log("SIGNED IN", req.oidc.user.nickname);
   }
@@ -118,7 +115,6 @@ app.get('*', (req, res) => {
     .map(({ route }) => {
       if (route.loadData) {
         const params = req.path.split('/');
-        console.log('my params are: ', params)        
         if (req.oidc.user){
           return route.loadData(store, req.oidc.user.nickname, params[2])
         }
