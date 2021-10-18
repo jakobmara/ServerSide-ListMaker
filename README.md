@@ -11,3 +11,6 @@
 
 <h2>Current features</h2>
 <p>Allow users to sign in and provide them with a page of all the lists they've created. Users can edit lists to add, remove, or change position of entries, users can edit entries to assign them a score or leave some comments about the specific entry. Users can view other user created lists by navigating to the explore tab.</p>
+
+<h2>References</h2>
+<ul>Used <a href="https://github.com/StephenGrider/ReactSSRCasts"> ReactSSRCasts</a> as a template</ul>
