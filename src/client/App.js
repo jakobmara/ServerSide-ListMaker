@@ -22,7 +22,6 @@ function mapStateToProps(state){
 //calls function to check if user's logged in or not
 //should i make it so that loadData is passed a boolean is_authenticated and if its true to call the info to get the userName of email
 function loadData(store, user){
-  console.log("APP LOADING DATA: ", user);
   if (user){
     const val = store.dispatch(fetchProfile(user))
     return val

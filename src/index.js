@@ -21,7 +21,6 @@ app.use('/api',proxy(API_URL, {
 let users = []
 axios.get('https://list-maker-api.herokuapp.com/getUsers')
 .then(response => {
-    console.log(response.data);
     users = response.data.users
 }).catch(error => {
     console.log("PError: ", error);
