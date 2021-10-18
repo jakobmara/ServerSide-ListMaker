@@ -25,14 +25,14 @@ export default (req, store, context) => {
         ${helmet.meta.toString()}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="http://test.jakemarasovic.dev/styles.css" />
+        <link rel="stylesheet" type="text/css" href="http://localhost:8080/styles.css" />
         </head>
       <body>
         <div id="root">${content}</div>
         <script>
           window.INITIAL_STATE = ${serialize(store.getState())}
         </script>
-        <script src="http://test.jakemarasovic.dev/bundle.js"></script>
+        <script src="http://localhost:8080/bundle.js"></script>
       </body>
     </html>
   `;

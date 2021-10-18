@@ -68,7 +68,6 @@ class ListPage extends Component {
       this.listInfo = [
         <h1 key={1}>{this.state.title}</h1>,
         <h6 key={2}>By: {this.state.info.author}</h6>,
-        <p key={3}> List of entries for {this.state.listId} </p>
       ]
     }
     this.searchInput = this.searchInput.bind(this);
