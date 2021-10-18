@@ -16,7 +16,6 @@ const App = (props) => {
 //this gets info from state wether the user is authenticated or not and passes it to navBar
 
 function mapStateToProps(state){
-  console.log("mapping prop: ", state)
   return {user: state.user}
 }
 

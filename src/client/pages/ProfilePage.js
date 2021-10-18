@@ -65,7 +65,6 @@ class ProfilePage extends Component{
     }
 
     async createList(name, type){
-        console.log("calling create list:")
         const reqURL =  'https://list-maker-api.herokuapp.com/createList'
         await axios.post(reqURL, {
             listName: name,
@@ -134,12 +133,10 @@ class ProfilePage extends Component{
 
 function mapStateToProps(state, ownProps) {
     const username = ownProps.match.params.id;
-    console.log("lists: ", state);
     return {username: username, lists: state.profLists};
 }
 
 function loadData(store, auth, userId){
-    console.log('loading data... provided: ', userId);
     const val = store.dispatch(fetchProfLists(userId));
     return val;
 }
